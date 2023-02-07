@@ -1,7 +1,7 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace TeleBotApp.Bot.Handlers
+namespace TeleAppBot.Bot.Handlers
 {
     public class MessageHandlers
     {

@@ -2,7 +2,7 @@
 using Telegram.Bot.Types;
 using Telegram.Bot;
 
-namespace TeleBotApp.Bot.Handlers
+namespace TeleAppBot.Bot.Handlers
 {
     public class UpdateHandler
     {

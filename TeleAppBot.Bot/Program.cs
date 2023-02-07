@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TeleBotApp.Bot.Handlers;
+using TeleAppBot.Bot.Handlers;
 using Telegram.Bot;
 
-namespace TeleBotApp.Bot
+namespace TeleAppBot.Bot
 {
     class Program
     {

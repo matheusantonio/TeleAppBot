@@ -4,5 +4,6 @@ namespace TeleAppBot.Domain.Repositories
 {
     public interface IContatosRepository : IRepository<Contato>
     {
+        Task<Contato> ObterPorIdContato(int idContato);
     }
 }

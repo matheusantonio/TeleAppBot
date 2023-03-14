@@ -9,9 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppBot.Domain", "TeleAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppBot.Application", "TeleAppBot.Application\TeleAppBot.Application.csproj", "{3DD87BCC-390D-49AD-A5C2-AFAA182C1246}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleAppBot.Api", "TeleAppBot.Api\TeleAppBot.Api.csproj", "{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppBot.Api", "TeleAppBot.Api\TeleAppBot.Api.csproj", "{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleAppBot.Infrastructure", "TeleAppBot.Infrastructure\TeleAppBot.Infrastructure.csproj", "{4298330A-27B5-425B-8AF5-D260043D385B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppBot.Infrastructure", "TeleAppBot.Infrastructure\TeleAppBot.Infrastructure.csproj", "{4298330A-27B5-425B-8AF5-D260043D385B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleAppBot.WorkerEnviarMensagem", "TeleAppBot.WorkerEnviarMensagem\TeleAppBot.WorkerEnviarMensagem.csproj", "{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleAppBot.WorkerEnviarMidia", "TeleAppBot.WorkerEnviarMidia\TeleAppBot.WorkerEnviarMidia.csproj", "{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleAppBot.CrossCutting", "TeleAppBot.CrossCutting\TeleAppBot.CrossCutting.csproj", "{7B342554-4628-4C30-B43F-EF2CEF37AF47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{4298330A-27B5-425B-8AF5-D260043D385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4298330A-27B5-425B-8AF5-D260043D385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4298330A-27B5-425B-8AF5-D260043D385B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

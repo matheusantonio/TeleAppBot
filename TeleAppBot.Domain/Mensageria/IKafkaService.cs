@@ -4,6 +4,6 @@
     {
         Task EnviarMensagem<T>(T message) where T : Evento;
 
-        Task<T> ConsumirMensagem<T>() where T : Evento;
+        T ConsumirMensagem<T>(CancellationToken tokenCancelamento = default) where T : Evento;
     }
 }

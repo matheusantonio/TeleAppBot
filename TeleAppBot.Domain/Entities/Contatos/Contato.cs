@@ -18,5 +18,21 @@
         public string Nome { get; private set; }
         public string Sobrenome { get; private set; }
         public string Usuario { get; private set; }
+
+        public bool AtualizarContato(bool eBot, string nome, string sobrenome, string usuario)
+        {
+            var informacoesPossuemDiferenca = (eBot != EBot || nome != Nome || sobrenome != Sobrenome || usuario != Usuario);
+
+            if (!informacoesPossuemDiferenca)
+                return informacoesPossuemDiferenca;
+
+            EBot = eBot;
+            Nome = nome;
+            Sobrenome = sobrenome;
+            Usuario = usuario;
+
+            return informacoesPossuemDiferenca;
+
+        }
     }
 }

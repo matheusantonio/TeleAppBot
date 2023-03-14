@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 using TeleAppBot.Application.Mensagens.EnviarMensagem;
+using TeleAppBot.CrossCutting.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AdicionarServicos(builder.Configuration);
 
 var app = builder.Build();
 

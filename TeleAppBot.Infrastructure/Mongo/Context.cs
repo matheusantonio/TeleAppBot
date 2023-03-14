@@ -17,6 +17,8 @@ namespace TeleAppBot.Infrastructure.Mongo
             _mongoDatabase = mongoClient.GetDatabase(mongoConnectionUrl.DatabaseName);
         }
 
-        public IMongoCollection<MensagemModel> Canais => _mongoDatabase.GetCollection<MensagemModel>("Mensagens");
+        public IMongoCollection<MensagemModel> Mensagens => _mongoDatabase.GetCollection<MensagemModel>("Mensagens");
+        public IMongoCollection<ConversaModel> Conversas => _mongoDatabase.GetCollection<ConversaModel>("Conversas");
+        public IMongoCollection<ContatoModel> Contatos => _mongoDatabase.GetCollection<ContatoModel>("Contatos");
     }
 }

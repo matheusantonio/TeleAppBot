@@ -19,7 +19,9 @@ namespace TeleAppBot.Application.Mensagens.EnviarMensagem
             {
                 await _kafkaService.EnviarMensagem(
                     new EnviarMensagemTextoEvent(
-                        request.IdMensagem, request.IdChat, request.IdContato, request.Tipo, request.Data, request.MensagemTexto.Texto));
+                        request.IdMensagem, request.IdChat, request.IdContato, 
+                        new(request.Contato.EBot, request.Contato.Nome, request.Contato.Sobrenome, request.Contato.Usuario), 
+                        request.Tipo, request.Data, request.MensagemTexto.Texto));
             }
 
             else if(request.MensagemMidia is not null)

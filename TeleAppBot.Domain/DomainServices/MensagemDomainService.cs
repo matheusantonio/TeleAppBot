@@ -31,7 +31,7 @@ namespace TeleAppBot.Domain.DomainServices
 
             if (conversa is null)
             {
-                conversa = new Conversa(contato.Id);
+                conversa = new Conversa(contato.Id, evento.IdChat);
                 await _conversasRepository.Salvar(conversa);
             }
 
@@ -52,7 +52,7 @@ namespace TeleAppBot.Domain.DomainServices
 
             if (conversa is null)
             {
-                conversa = new Conversa(contato.Id);
+                conversa = new Conversa(contato.Id, evento.IdChat);
                 await _conversasRepository.Salvar(conversa);
             }
 

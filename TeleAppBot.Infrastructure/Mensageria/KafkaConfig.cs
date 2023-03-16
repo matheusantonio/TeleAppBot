@@ -2,7 +2,7 @@
 {
     public class KafkaConfig
     {
-        public string BootstrapServer { get; set; }
+        public string Broker { get; set; }
         public string ConsumerGroup { get; set; }
 
         public string TopicoMensagemTexto { get; set; }

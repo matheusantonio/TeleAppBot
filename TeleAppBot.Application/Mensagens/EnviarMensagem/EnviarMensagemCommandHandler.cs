@@ -4,7 +4,7 @@ using TeleAppBot.Domain.Mensageria;
 
 namespace TeleAppBot.Application.Mensagens.EnviarMensagem
 {
-    public class EnviarMensagemCommandHandler : IRequestHandler<EnviarMensagemCommand>
+    public class EnviarMensagemCommandHandler : IRequestHandler<EnviarMensagemCommand, Unit>
     {
         private readonly IKafkaService _kafkaService;
 

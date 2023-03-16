@@ -23,9 +23,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/mensagem", ([FromBody] EnviarMensagemCommand command, [FromServices] IMediator mediator) =>
+app.MapPost("/mensagem", async ([FromBody] EnviarMensagemCommand command, [FromServices] IMediator mediator) =>
 {
-    mediator.Send(command);
+    await mediator.Send(command);
 })
 .WithName("EnviarMensagem")
 .WithOpenApi();

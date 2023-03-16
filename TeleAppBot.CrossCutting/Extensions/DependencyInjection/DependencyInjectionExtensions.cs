@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using TeleAppBot.Application.Mensagens.EnviarMensagem;
 using TeleAppBot.Domain.DomainServices;
+using TeleAppBot.Domain.Events;
 using TeleAppBot.Domain.Mensageria;
 using TeleAppBot.Domain.Repositories;
 using TeleAppBot.Infrastructure.AutoMapper;
@@ -16,9 +19,10 @@ namespace TeleAppBot.CrossCutting.Extensions.DependencyInjection
     {
         public static void AdicionarServicos(this IServiceCollection servicos, IConfiguration configuracoes)
         {
-            servicos.Configure<KafkaConfig>(configuracoes.GetSection("KafkaConfig"));
+            servicos.Configure<KafkaConfig>(configuracoes.GetSection("KafkaConfiguration"));
 
-            servicos.AddScoped(x => new Context(configuracoes.GetConnectionString("MongoDB")!));
+            var connectionString = configuracoes.GetConnectionString("MongoDB");
+            servicos.AddSingleton(new Context(connectionString));
 
             servicos.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
@@ -28,6 +32,8 @@ namespace TeleAppBot.CrossCutting.Extensions.DependencyInjection
 
             servicos.AddScoped<IContatoDomainService, ContatoDomainService>();
             servicos.AddScoped<IMensagemDomainService, MensagemDomainService>();
+
+            servicos.AddScoped<IRequestHandler<EnviarMensagemCommand, Unit>, EnviarMensagemCommandHandler>();
 
             servicos.AddScoped<IMensagensRepository, MensagensRepository>();
             servicos.AddScoped<IConversasRepository, ConversasRepository>();

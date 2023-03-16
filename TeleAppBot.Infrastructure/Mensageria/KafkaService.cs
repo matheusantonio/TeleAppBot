@@ -13,22 +13,22 @@ namespace TeleAppBot.Infrastructure.Mensageria
         private IConsumer<string, string> _consumer;
         private bool _disposed;
 
-        private readonly Dictionary<Type, string> _nomeTopicos;
+        private readonly Dictionary<string, string> _nomeTopicos;
 
         public KafkaService(IOptions<KafkaConfig> options)
         {
             _config = options.Value;
 
-            _nomeTopicos = new Dictionary<Type, string>
+            _nomeTopicos = new Dictionary<string, string>
             {
-                { typeof(EnviarMensagemTextoEvent), _config.TopicoMensagemTexto },
-                { typeof(EnviarMensagemMidiaEvent), _config.TopicoMensagemMidia }
+                { nameof(EnviarMensagemTextoEvent), _config.TopicoMensagemTexto },
+                { nameof(EnviarMensagemMidiaEvent), _config.TopicoMensagemMidia }
             };
 
             _disposed = false;
         }
 
-        private string ObterTopico<T>() => _nomeTopicos[typeof(T)];
+        private string ObterTopico<T>() => _nomeTopicos[typeof(T).Name];
 
         public T ConsumirMensagem<T>(CancellationToken tokenCancelamento = default) where T : Evento
         {
@@ -36,7 +36,7 @@ namespace TeleAppBot.Infrastructure.Mensageria
             {
                 var consumerConfig = new ConsumerConfig
                 {
-                    BootstrapServers = _config.BootstrapServer,
+                    BootstrapServers = _config.Broker,
                     GroupId = _config.ConsumerGroup
                 };
 
@@ -58,7 +58,7 @@ namespace TeleAppBot.Infrastructure.Mensageria
             {
                 var producerConfig = new ProducerConfig
                 {
-                    BootstrapServers = _config.BootstrapServer
+                    BootstrapServers = _config.Broker
                 };
 
                 _producer = new ProducerBuilder<string, string>(producerConfig).SetValueSerializer(Serializers.Utf8).Build();
@@ -69,7 +69,9 @@ namespace TeleAppBot.Infrastructure.Mensageria
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
-            await _producer.ProduceAsync(ObterTopico<T>(), new Message<string, string> { Value = json });
+            var topico = ObterTopico<T>();
+
+            await _producer.ProduceAsync(topico, new Message<string, string> { Value = json });
         }
 
         public void Dispose()

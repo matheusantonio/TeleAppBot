@@ -6,7 +6,7 @@
 
     public record MensagemTextoRequest(string Texto);
 
-    public record MensagemMidiaRequest(string IdArquivo, string IdUnicoArquivo, int Tamanho);
+    public record MensagemMidiaRequest(string IdArquivo, string IdUnicoArquivo, long Tamanho);
 
     public enum TipoMensagem
     {

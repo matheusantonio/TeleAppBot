@@ -33,7 +33,26 @@ namespace TeleAppBot.Bot.Handlers
                     message.MessageId, message.Chat.Id, user.Id,
                     TipoMensagem.Texto, message.Date,
                     new InformacoesContatoRequest(user.IsBot, user.FirstName, user.LastName, user.Username),
-                    new MensagemTextoRequest(text), null);
+                    null, null);
+
+                if (message.Type == Telegram.Bot.Types.Enums.MessageType.Text)
+                {
+                    request = request with { MensagemTexto = new MensagemTextoRequest(text) };
+                }
+                else if (message.Type == Telegram.Bot.Types.Enums.MessageType.Photo)
+                {
+                    request = request with
+                    {
+                        MensagemMidia = new MensagemMidiaRequest(message.Photo.FirstOrDefault()?.FileId, message.Photo.FirstOrDefault()?.FileUniqueId, message.Photo.FirstOrDefault().FileSize.Value)
+                    };
+                }
+                else if(message.Type == Telegram.Bot.Types.Enums.MessageType.Document)
+                {
+                    request = request with
+                    {
+                        MensagemMidia = new MensagemMidiaRequest(message.Document.FileId, message.Document.FileUniqueId, message.Document.FileSize.Value)
+                    };
+                }
 
                 await _botService.EnviarMensagem(request);
 

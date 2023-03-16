@@ -5,7 +5,6 @@ namespace TeleAppBot.Infrastructure.Mongo
 {
     public class Context
     {
-
         private readonly IMongoDatabase _mongoDatabase;
 
         public Context(string connectionString)

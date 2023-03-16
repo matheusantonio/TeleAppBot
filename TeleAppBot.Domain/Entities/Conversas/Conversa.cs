@@ -11,14 +11,15 @@ namespace TeleAppBot.Domain.Entities.Conversas
 
         public IReadOnlyList<Mensagem> Mensagens => _mensagens.AsReadOnly();
 
-        public Conversa(Guid idContato, IList<Mensagem> mensagens) : this(idContato)
+        public Conversa(Guid idContato, int idChat, IList<Mensagem> mensagens) : this(idContato, idChat)
         {
             _mensagens = mensagens;
         }
 
-        public Conversa(Guid idContato)
+        public Conversa(Guid idContato, int idChat)
         {
             IdContato = idContato;
+            IdChat = idChat;
             _mensagens = new List<Mensagem>();
 
             Data = DateTime.Now;

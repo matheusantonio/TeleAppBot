@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR.Client.Http;
 using Microsoft.Extensions.Options;
+using System.Text;
 using System.Text.Json;
 
 namespace TeleAppBot.Bot.ExternalServices
@@ -17,9 +18,9 @@ namespace TeleAppBot.Bot.ExternalServices
 
         public async Task EnviarMensagem(EnviarMensagemRequest mensagem)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "/mensagem")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{_config.Url}/mensagem")
             {
-                Content = new StringContent(JsonSerializer.Serialize(mensagem))
+                Content = new StringContent(JsonSerializer.Serialize(mensagem), Encoding.UTF8, "application/json")
             };
 
             var response = await _client.SendAsync(request);

@@ -11,7 +11,8 @@ namespace TeleAppBot.Bot
         static void Main(string[] args)
         {
             var serviceCollection = new ServiceCollection();
-            var builder = new ConfigurationBuilder();
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json");
 
             var configuration = builder.Build();
 

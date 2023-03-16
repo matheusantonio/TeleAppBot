@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeleAppBot.Application\TeleAppBot.Application.csproj" />
     <ProjectReference Include="..\TeleAppBot.Domain\TeleAppBot.Domain.csproj" />
     <ProjectReference Include="..\TeleAppBot.Infrastructure\TeleAppBot.Infrastructure.csproj" />
   </ItemGroup>

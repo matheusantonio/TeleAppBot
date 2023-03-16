@@ -24,12 +24,10 @@ namespace TeleAppBot.CrossCutting.Extensions.DependencyInjection
 
             servicos.AddSingleton<IMapper>(MapperConfig.InicializarAutoMapper());
 
-            servicos.AddScoped<IKafkaService, IKafkaService>();
+            servicos.AddScoped<IKafkaService, KafkaService>();
 
             servicos.AddScoped<IContatoDomainService, ContatoDomainService>();
             servicos.AddScoped<IMensagemDomainService, MensagemDomainService>();
-
-            servicos.AddScoped<Context>();
 
             servicos.AddScoped<IMensagensRepository, MensagensRepository>();
             servicos.AddScoped<IConversasRepository, ConversasRepository>();

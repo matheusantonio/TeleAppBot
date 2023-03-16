@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TeleAppBot.Bot.ExternalServices;
 using TeleAppBot.Bot.Handlers;
 using Telegram.Bot;
 
@@ -10,19 +11,27 @@ namespace TeleAppBot.Bot
         static void Main(string[] args)
         {
             var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            var builder = new ConfigurationBuilder();
+
+            var configuration = builder.Build();
+
+            ConfigureServices(serviceCollection, configuration);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             StartBot(serviceProvider);
         }
 
-        public static void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             var config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .Build();
 
             var botKey = config["TELEGRAM_BOT_TOKEN"];
+
+            services.Configure<TeleAppBotApiConfig>(configuration.GetSection("TeleAppBotApi"));
+
+            services.AddHttpClient<TeleAppBotService>();
 
             services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(botKey!));
 

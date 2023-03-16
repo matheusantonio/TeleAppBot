@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using TeleAppBot.Bot.ExternalServices;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace TeleAppBot.Bot.Handlers
@@ -6,12 +7,14 @@ namespace TeleAppBot.Bot.Handlers
     public class MessageHandlers
     {
         private readonly ITelegramBotClient _botClient;
+        private readonly TeleAppBotService _botService;
 
         private bool invert = false;
 
-        public MessageHandlers(ITelegramBotClient botClient)
+        public MessageHandlers(ITelegramBotClient botClient, TeleAppBotService botService)
         {
             _botClient = botClient;
+            _botService = botService;
         }
 
         public async Task HandleMessage(Message message)
@@ -26,10 +29,26 @@ namespace TeleAppBot.Bot.Handlers
                 await HandleCommand(user.Id, text);
             else
             {
+                var request = new EnviarMensagemRequest(
+                    message.MessageId, message.Chat.Id, user.Id,
+                    TipoMensagem.Texto, message.Date,
+                    new InformacoesContatoRequest(user.IsBot, user.FirstName, user.LastName, user.Username),
+                    new MensagemTextoRequest(text), null);
+
+                await _botService.EnviarMensagem(request);
+
+                var responseMessage = text;
                 if (invert)
-                    await _botClient.SendTextMessageAsync(user.Id, new string(text.Reverse().ToArray()));
+                {
+                    responseMessage = new string(text.Reverse().ToArray());
+                    await _botClient.SendTextMessageAsync(user.Id, responseMessage);
+                }
                 else
                     await _botClient.CopyMessageAsync(user.Id, user.Id, message.MessageId);
+
+                request = request with { MensagemTexto = new MensagemTextoRequest(responseMessage) };
+
+                await _botService.EnviarMensagem(request);
             }
 
         }

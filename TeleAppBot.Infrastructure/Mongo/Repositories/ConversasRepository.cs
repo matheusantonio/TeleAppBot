@@ -29,7 +29,7 @@ namespace TeleAppBot.Infrastructure.Mongo.Repositories
             return _autoMapper.Map<Conversa>(conversaModel);
         }
 
-        public async Task<Conversa> ObterPorIdChat(int idChat)
+        public async Task<Conversa> ObterPorIdChat(long idChat)
         {
             var conversaModel = await _contexto.Conversas.Find(m => m.IdChat == idChat).FirstOrDefaultAsync();
             return _autoMapper.Map<Conversa>(conversaModel);

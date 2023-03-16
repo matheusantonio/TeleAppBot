@@ -1,5 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TeleAppBot.Application.Conversas.InverterConversa;
+using TeleAppBot.Application.Conversas.ObterConversa;
 using TeleAppBot.Application.Mensagens.EnviarMensagem;
 using TeleAppBot.CrossCutting.Extensions.DependencyInjection;
 
@@ -30,5 +32,18 @@ app.MapPost("/mensagem", async ([FromBody] EnviarMensagemCommand command, [FromS
 .WithName("EnviarMensagem")
 .WithOpenApi();
 
+app.MapGet("/conversa/{idChat}", async (long idChat, [FromServices] IMediator mediator) =>
+{
+    return await mediator.Send(new ObterConversaQuery(idChat));
+})
+.WithName("ObterConversa")
+.WithOpenApi();
+
+app.MapPost("/conversa", async ([FromBody] InverterConversaCommand command, [FromServices] IMediator mediator) =>
+{
+    await mediator.Send(command);
+})
+.WithName("InverterConversa")
+.WithOpenApi();
 
 app.Run();

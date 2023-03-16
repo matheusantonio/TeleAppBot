@@ -3,7 +3,8 @@
     public class ConversaModel
     {
         public Guid Id { get; set; }
-        public int IdChat { get; set; }
+        public long IdChat { get; set; }
         public Guid IdContato { get; set; }
+        public bool Invertida { get; set; }
     }
 }

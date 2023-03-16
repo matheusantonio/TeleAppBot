@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using TeleAppBot.Application.Conversas.InverterConversa;
+using TeleAppBot.Application.Conversas.ObterConversa;
 using TeleAppBot.Application.Mensagens.EnviarMensagem;
 using TeleAppBot.Domain.DomainServices;
 using TeleAppBot.Domain.Events;
@@ -34,6 +36,8 @@ namespace TeleAppBot.CrossCutting.Extensions.DependencyInjection
             servicos.AddScoped<IMensagemDomainService, MensagemDomainService>();
 
             servicos.AddScoped<IRequestHandler<EnviarMensagemCommand, Unit>, EnviarMensagemCommandHandler>();
+            servicos.AddScoped<IRequestHandler<ObterConversaQuery, ObterConversaResponseModel>, ObterConversaQueryHandler>();
+            servicos.AddScoped<IRequestHandler<InverterConversaCommand, Unit>, InverterConversaCommandHandler>();
 
             servicos.AddScoped<IMensagensRepository, MensagensRepository>();
             servicos.AddScoped<IConversasRepository, ConversasRepository>();

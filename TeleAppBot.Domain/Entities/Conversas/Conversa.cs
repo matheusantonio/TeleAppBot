@@ -4,10 +4,11 @@ namespace TeleAppBot.Domain.Entities.Conversas
 {
     public class Conversa : Entity, IAggregateRoot
     {
-        public int IdChat { get; private set; }
+        public long IdChat { get; private set; }
         public Guid IdContato { get; private set; }
         public DateTime Data { get; private set; }
         public IList<Mensagem> _mensagens { get; }
+        public bool Invertida { get; private set; }
 
         public IReadOnlyList<Mensagem> Mensagens => _mensagens.AsReadOnly();
 
@@ -23,11 +24,16 @@ namespace TeleAppBot.Domain.Entities.Conversas
             _mensagens = new List<Mensagem>();
 
             Data = DateTime.Now;
+            Invertida = false;
         }
 
         public void AdicionarMensagem(Mensagem mensagem)
         {
             _mensagens.Add(mensagem);
         }
+
+        public void Inverter() => Invertida = true;
+
+        public void Reverter() => Invertida = false;
     }
 }

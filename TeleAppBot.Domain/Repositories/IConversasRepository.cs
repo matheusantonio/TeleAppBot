@@ -4,6 +4,6 @@ namespace TeleAppBot.Domain.Repositories
 {
     public interface IConversasRepository : IRepository<Conversa>
     {
-        Task<Conversa> ObterPorIdChat(int idChat);
+        Task<Conversa> ObterPorIdChat(long idChat);
     }
 }

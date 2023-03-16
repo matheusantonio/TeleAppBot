@@ -26,7 +26,7 @@ namespace TeleAppBot.Bot.Handlers
                 return;
 
             if (text.StartsWith("/"))
-                await HandleCommand(user.Id, text);
+                await HandleCommand(user.Id, message.Chat.Id, text);
             else
             {
                 var request = new EnviarMensagemRequest(
@@ -56,6 +56,10 @@ namespace TeleAppBot.Bot.Handlers
 
                 await _botService.EnviarMensagem(request);
 
+                var conversa = await _botService.ObterConversa(message.Chat.Id);
+
+                invert = conversa.Invertida;
+
                 var responseMessage = text;
                 if (invert)
                 {
@@ -72,12 +76,13 @@ namespace TeleAppBot.Bot.Handlers
 
         }
 
-        public async Task HandleCommand(long userId, string text)
+        public async Task HandleCommand(long userId, long chatId, string text)
         {
             switch (text)
             {
                 case "/invert":
                     invert = !invert;
+                    await _botService.InverterConversa(chatId, invert);
                     if (invert)
                         await _botClient.SendTextMessageAsync(userId, new string("Bip bop! Now all messages are inverted!".Reverse().ToArray()));
                     else

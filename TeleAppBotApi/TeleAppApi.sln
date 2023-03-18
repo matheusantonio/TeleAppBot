@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.Domain", "TeleAppBot.Domain\TeleAppApi.Domain.csproj", "{45E2CE74-F286-4D94-B777-8D7812FD2794}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.Application", "TeleAppBot.Application\TeleAppApi.Application.csproj", "{3DD87BCC-390D-49AD-A5C2-AFAA182C1246}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.Api", "TeleAppBot.Api\TeleAppApi.Api.csproj", "{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.Infrastructure", "TeleAppBot.Infrastructure\TeleAppApi.Infrastructure.csproj", "{4298330A-27B5-425B-8AF5-D260043D385B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.WorkerEnviarMensagem", "TeleAppBot.WorkerEnviarMensagem\TeleAppApi.WorkerEnviarMensagem.csproj", "{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.WorkerEnviarMidia", "TeleAppBot.WorkerEnviarMidia\TeleAppApi.WorkerEnviarMidia.csproj", "{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleAppApi.CrossCutting", "TeleAppBot.CrossCutting\TeleAppApi.CrossCutting.csproj", "{7B342554-4628-4C30-B43F-EF2CEF37AF47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45E2CE74-F286-4D94-B777-8D7812FD2794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E2CE74-F286-4D94-B777-8D7812FD2794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E2CE74-F286-4D94-B777-8D7812FD2794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E2CE74-F286-4D94-B777-8D7812FD2794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DD87BCC-390D-49AD-A5C2-AFAA182C1246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DD87BCC-390D-49AD-A5C2-AFAA182C1246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DD87BCC-390D-49AD-A5C2-AFAA182C1246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DD87BCC-390D-49AD-A5C2-AFAA182C1246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01136D4A-19A8-43D6-AAA2-69DC5FCB908F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4298330A-27B5-425B-8AF5-D260043D385B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4298330A-27B5-425B-8AF5-D260043D385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4298330A-27B5-425B-8AF5-D260043D385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4298330A-27B5-425B-8AF5-D260043D385B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD07824-72F1-4959-A6EF-4F7083EAC4B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4614AF53-DAB5-4D3C-99B3-26A5388AFC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B342554-4628-4C30-B43F-EF2CEF37AF47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {026C6BED-DB39-479C-81A9-8FD86094CF61}
+	EndGlobalSection
+EndGlobal

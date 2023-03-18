@@ -1,8 +1,65 @@
 ---
 version: '2'
 services:
+
+  teleappbot:
+    image: teleappbot
+    container_name: teleappbot
+    build:
+      context: TeleAppBot
+      dockerfile: Dockerfile
+    depends_on:
+      - teleappbotapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+  
+  teleappbotapi:
+    image: teleappbotapi
+    container_name: teleappbotapi
+    build:
+      context: TeleAppBotApi
+      dockerfile: Dockerfile
+    ports:
+      - "2711:2711"
+    depends_on:
+      - kafka
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+
+  workerenviarmensagem:
+    image: workerenviarmensagem
+    container_name: workerenviarmensagem
+    build:
+      context: TeleAppBotApi
+      dockerfile: TeleAppBot.WorkerEnviarMensagem/Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+
+  workerenviarmidia:
+    image: workerenviarmidia
+    container_name: workerenviarmidia
+    build:
+      context: TeleAppBotApi
+      dockerfile: TeleAppBot.WorkerEnviarMidia/Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+
+  reverseproxy:
+    build: ./nginx
+    container_name: reverseproxy
+    ports:
+      - "3333:80"
+    depends_on:
+      - teleappbotapi
+
   mongo:
     image: mongo
+    container_name: mongo
     restart: always
     ports:
         - 27017:27017
@@ -21,8 +78,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 2181:2181
-    networks:
-      - kafka-network
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -31,16 +86,14 @@ services:
       - zookeeper
     ports:      
       - 29092:29092
-    networks:
-      - kafka-network
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1   
     
   kafka-ui:
     image: provectuslabs/kafka-ui:master
@@ -55,15 +108,11 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-    networks:
-      - kafka-network
 
   init-kafka:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
       - kafka
-    networks:
-      - kafka-network
     entrypoint: [ '/bin/sh', '-c' ]
     command: |
       "
@@ -76,5 +125,5 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
       "
 networks:
-  kafka-network:
+  default:
     driver: bridge

@@ -20,12 +20,13 @@ services:
     build:
       context: TeleAppBotApi
       dockerfile: Dockerfile
-    ports:
-      - "2711:2711"
     depends_on:
       - kafka
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
+      MONGO_CONNECTION: ${MONGO_CONNECTION}
+      KAFKA_USER: ${KAFKA_USER}
+      KAFKA_PASSWORD: ${KAFKA_PASSWORD}
 
   workerenviarmensagem:
     image: workerenviarmensagem
@@ -37,6 +38,9 @@ services:
       - kafka
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
+      MONGO_CONNECTION: ${MONGO_CONNECTION}
+      KAFKA_USER: ${KAFKA_USER}
+      KAFKA_PASSWORD: ${KAFKA_PASSWORD}
 
   workerenviarmidia:
     image: workerenviarmidia
@@ -48,6 +52,9 @@ services:
       - kafka
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
+      MONGO_CONNECTION: ${MONGO_CONNECTION}
+      KAFKA_USER: ${KAFKA_USER}
+      KAFKA_PASSWORD: ${KAFKA_PASSWORD}
 
   reverseproxy:
     build: ./nginx
@@ -56,74 +63,7 @@ services:
       - "3333:80"
     depends_on:
       - teleappbotapi
-
-  mongo:
-    image: mongo
-    container_name: mongo
-    restart: always
-    ports:
-        - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: usrTeleAppBot
-      MONGO_INITDB_ROOT_PASSWORD: pwdTeleAppBot
-      MONGO_INITDB_DATABASE: teleAppBot
-    volumes:
-       - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/:ro
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - 2181:2181
-
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafka
-    depends_on:
-      - zookeeper
-    ports:      
-      - 29092:29092
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1   
-    
-  kafka-ui:
-    image: provectuslabs/kafka-ui:master
-    container_name: kafka-ui
-    depends_on:
-      - kafka
-      - zookeeper
-    ports:
-      - 8080:8080
-    restart: always
-    environment: 
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-
-  init-kafka:
-    image: confluentinc/cp-kafka:6.1.1
-    depends_on:
-      - kafka
-    entrypoint: [ '/bin/sh', '-c' ]
-    command: |
-      "
-      # blocks until kafka is reachable
-      kafka-topics --bootstrap-server kafka:9092 --list
-      echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic teleappbot-mensagem-texto --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic teleappbot-mensagem-midia --replication-factor 1 --partitions 1
-      echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka:9092 --list
-      "
+  
 networks:
   default:
     driver: bridge

@@ -1,5 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
+using System.Text.Json;
 using TeleAppBot.Application.Conversas.InverterConversa;
 using TeleAppBot.Application.Conversas.ObterConversa;
 using TeleAppBot.Application.Mensagens.EnviarMensagem;
@@ -16,11 +18,7 @@ builder.Services.AdicionarServicos(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("TeleAppBotOrigin",
-                      policy =>
-                      {
-                          policy.WithOrigins("http://teleappbot");
-                      });
+    options.AddDefaultPolicy(options => options.AllowAnyOrigin());
 });
 
 var app = builder.Build();
@@ -32,10 +30,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.MapPost("/mensagem", async ([FromBody] EnviarMensagemCommand command, [FromServices] IMediator mediator) =>
 {
+    Console.WriteLine($"Requisição recebida: {JsonSerializer.Serialize(command)}");
     await mediator.Send(command);
 })
 .WithName("EnviarMensagem")
@@ -43,6 +40,7 @@ app.MapPost("/mensagem", async ([FromBody] EnviarMensagemCommand command, [FromS
 
 app.MapGet("/conversa/{idChat}", async (long idChat, [FromServices] IMediator mediator) =>
 {
+    Console.WriteLine($"Requisição recebida: {idChat}");
     return await mediator.Send(new ObterConversaQuery(idChat));
 })
 .WithName("ObterConversa")

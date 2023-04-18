@@ -37,7 +37,11 @@ namespace TeleAppBot.Infrastructure.Mensageria
                 var consumerConfig = new ConsumerConfig
                 {
                     BootstrapServers = _config.Broker,
-                    GroupId = _config.ConsumerGroup
+                    GroupId = _config.ConsumerGroup,
+                    SaslMechanism = SaslMechanism.Plain,
+                    SecurityProtocol = SecurityProtocol.SaslSsl,
+                    SaslUsername = _config.Username,
+                    SaslPassword = _config.Password
                 };
 
                 Console.WriteLine(_config.Broker);
@@ -61,7 +65,11 @@ namespace TeleAppBot.Infrastructure.Mensageria
             {
                 var producerConfig = new ProducerConfig
                 {
-                    BootstrapServers = _config.Broker
+                    BootstrapServers = _config.Broker,
+                    SaslMechanism = SaslMechanism.Plain,
+                    SecurityProtocol = SecurityProtocol.SaslSsl,
+                    SaslUsername = _config.Username,
+                    SaslPassword = _config.Password
                 };
 
                 _producer = new ProducerBuilder<string, string>(producerConfig).SetValueSerializer(Serializers.Utf8).Build();

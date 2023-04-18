@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: teleappbot-configmap
+  namespace: teleapp-bot
+data:
+  appsettings.json: |-
+    {
+      "TeleAppBotApi": {
+        "Url": "http://teleappapi-service:2712"
+      }
+    }

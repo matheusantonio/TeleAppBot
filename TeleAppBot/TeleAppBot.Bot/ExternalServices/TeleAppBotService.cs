@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
-using Newtonsoft.Json;
 
 namespace TeleAppBot.Bot.ExternalServices
 {
@@ -18,6 +17,8 @@ namespace TeleAppBot.Bot.ExternalServices
 
         public async Task EnviarMensagem(EnviarMensagemRequest mensagem)
         {
+            Console.WriteLine($"Api URL: {_config.Url} {JsonSerializer.Serialize(mensagem)}");
+
             var request = new HttpRequestMessage(HttpMethod.Post, $"{_config.Url}/mensagem")
             {
                 Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(mensagem), Encoding.UTF8, "application/json")
@@ -29,12 +30,13 @@ namespace TeleAppBot.Bot.ExternalServices
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-
+                    var stringContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"{response.StatusCode} {stringContent}");
                 }
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Erro ao consultar serviço TeleAppApi: {ex.Message} {ex.InnerException}");
+                Console.WriteLine($"Erro ao consultar serviço TeleAppApi: {ex.Message} {ex.InnerException?.Message} {ex.InnerException?.InnerException?.Message}");
             }
         }
 

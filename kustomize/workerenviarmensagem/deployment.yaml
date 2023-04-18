@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workerenviarmensagem-deployment
+  namespace: teleapp-wokerenviarmensagem
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workerenviarmensagem
+  template:
+    metadata:
+      labels:
+        app: workerenviarmensagem
+    spec:
+      containers:
+      - name: workerenviarmensagem
+        image: matheusaoc/teleappbot-workerenviarmensagem:v1.0.1
+        imagePullPolicy: Always
+        env:
+        - name: KAFKA_USER
+          value: KAFKA_USER
+        - name: KAFKA_PASSWORD
+          value: KAFKA_PASSWORD
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: appsettings-volume
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+      volumes:
+        - name: appsettings-volume
+          configMap:
+            name: workerenviarmensagem-configmap

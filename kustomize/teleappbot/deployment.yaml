@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teleappbot-deployment
+  namespace: teleapp-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teleappbot
+  template:
+    metadata:
+      labels:
+        app: teleappbot
+    spec:
+      containers:
+      - name: teleappbot
+        image: matheusaoc/teleappbot:v1.0.5
+        imagePullPolicy: Always
+        env:
+        - name: TELEGRAM_BOT_TOKEN
+          value: "{TELEGRAM_BOT_TOKEN}"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+          - name: appsettings-volume
+            mountPath: /app/appsettings.json
+            subPath: appsettings.json
+      volumes:
+        - name: appsettings-volume
+          configMap:
+            name: teleappbot-configmap

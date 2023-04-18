@@ -21,10 +21,26 @@ namespace TeleAppBot.CrossCutting.Extensions.DependencyInjection
     {
         public static void AdicionarServicos(this IServiceCollection servicos, IConfiguration configuracoes)
         {
-            servicos.Configure<KafkaConfig>(configuracoes.GetSection("KafkaConfiguration"));
+            var kafkaConfiguration = configuracoes.GetSection("KafkaConfiguration");
+            servicos.Configure<KafkaConfig>(cfg =>
+            {
+                cfg.Broker = kafkaConfiguration.GetValue<string>(nameof(cfg.Broker));
+                cfg.ConsumerGroup = kafkaConfiguration.GetValue<string>(nameof(cfg.ConsumerGroup));
+                cfg.TopicoMensagemTexto = kafkaConfiguration.GetValue<string>(nameof(cfg.TopicoMensagemTexto));
+                cfg.TopicoMensagemMidia = kafkaConfiguration.GetValue<string>(nameof(cfg.TopicoMensagemMidia));
+                cfg.Username = Environment.GetEnvironmentVariable("KAFKA_USER");
+                cfg.Password = Environment.GetEnvironmentVariable("KAFKA_PASSWORD");
+            });
 
-            var connectionString = configuracoes.GetConnectionString("MongoDB");
+            Console.WriteLine($"Kafka: {kafkaConfiguration} {Environment.GetEnvironmentVariable("KAFKA_USER")} {Environment.GetEnvironmentVariable("KAFKA_PASSWORD")}");
+
+            var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION");
+            if(string.IsNullOrEmpty(connectionString))
+                connectionString = configuracoes.GetConnectionString("MongoDB");
+
             servicos.AddSingleton(new Context(connectionString));
+
+            Console.WriteLine($"Mongo: {connectionString}");
 
             servicos.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 

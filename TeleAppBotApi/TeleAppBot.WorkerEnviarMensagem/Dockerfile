@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS publish
 COPY . /src
 WORKDIR /src
-RUN 
 RUN dotnet publish "TeleAppApi.sln" -c Release -o /app/publish 
 COPY TeleAppBot.WorkerEnviarMensagem/appsettings.json /app/publish/appsettings.json
 COPY TeleAppBot.WorkerEnviarMensagem/appsettings.Development.json /app/publish/appsettings.Development.json

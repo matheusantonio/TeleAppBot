@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: teleappapi-service
+  namespace: teleapp-api
+spec:
+  selector:
+    app: teleappapi
+  type: ClusterIP
+  ports:
+  - name: https 
+    port: 2711
+    targetPort: 2711
+    protocol: TCP
+  - name: http 
+    port: 2712
+    targetPort: 2712
+    protocol: TCP

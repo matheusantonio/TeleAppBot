@@ -1,0 +1,7 @@
+namespace: default
+
+resources:
+  - "./teleappbot"
+  - "./teleappbot-api"
+  - "./workerenviarmensagem"
+  - "./workerenviarmidia"

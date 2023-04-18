@@ -12,7 +12,7 @@ namespace TeleAppBot.Domain.DomainServices
             _contatosRepository = contatosRepository;
         }
 
-        public async Task ValidarExistenciaDeContato(int idUsuario, bool eBot, string nome, string sobrenome, string usuario)
+        public async Task ValidarExistenciaDeContato(long idUsuario, bool eBot, string nome, string sobrenome, string usuario)
         {
             var contato = await _contatosRepository.ObterPorIdContato(idUsuario);
 
@@ -28,7 +28,7 @@ namespace TeleAppBot.Domain.DomainServices
                 await _contatosRepository.Atualizar(contato);
         }
 
-        public async Task<bool> ValidarExistenciaDeContato(int idUsuario)
+        public async Task<bool> ValidarExistenciaDeContato(long idUsuario)
         {
             var contato = await _contatosRepository.ObterPorIdContato(idUsuario);
 

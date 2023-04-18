@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: teleappapi
-        image: matheusaoc/teleappbot-api:v1.0.5
+        image: matheusaoc/teleappbot-api:v1.0.6
         imagePullPolicy: Always
         env:
         - name: KAFKA_USER

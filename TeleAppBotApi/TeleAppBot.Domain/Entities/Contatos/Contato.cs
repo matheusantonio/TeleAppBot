@@ -2,7 +2,7 @@
 {
     public class Contato : Entity, IAggregateRoot
     {
-        public Contato(int idUsuario, bool eBot, string nome, string sobrenome, string usuario)
+        public Contato(long idUsuario, bool eBot, string nome, string sobrenome, string usuario)
         {
             IdUsuario = idUsuario;
             EBot = eBot;
@@ -11,7 +11,7 @@
             Usuario = usuario;
         }
 
-        public int IdUsuario { get; private set; }
+        public long IdUsuario { get; private set; }
 
         public bool EBot { get; private set; }
 
